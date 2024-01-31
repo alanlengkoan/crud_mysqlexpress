@@ -13,8 +13,7 @@ import {
 
 const app = express();
 
-const __filename = fileURLToPath(
-    import.meta.url);
+const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // untuk cek koneksi database
@@ -25,16 +24,20 @@ const __dirname = path.dirname(__filename);
         console.log('Database terkoneksi!');
 
         // untuk sync database
-        await Promise.all([
-            Buku.sync({
-                force: true
-            }),
-        ]);
-        console.log('Database synchronous!');
+        // await Promise.all([
+        //     Buku.sync({
+        //         force: true
+        //     }),
+        // ]);
+        // console.log('Database synchronous!');
     } catch (error) {
         console.error('Unable to connect to the database:', error);
     }
 })();
+
+// untuk body respon
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // untuk mengakses file static
 app.use(express.static(path.join(__dirname, "public")));
